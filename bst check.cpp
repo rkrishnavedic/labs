@@ -17,16 +17,13 @@ struct node{
     node* l;
     node* r;
 };
+vector<int> in;
 
-bool cbst(node* root){
-    if(root==NULL){return true;}
-    if(root->l!=NULL){
-        if(root->d < root->l->d){return false;}
-    }
-    if(root->r!=NULL){
-        if(root->d > root->r->d){return false;}
-    }
-    return (cbst(root->l) && cbst(root->r));
+void inOrder(node* n){
+    if(n==NULL){return;}
+    inOrder(n->l);
+    in.push_back(n->d);
+    inOrder(n->r);
 }
 
 node* nodify(int d){
@@ -68,6 +65,14 @@ void pri(node * n){
     pri(n->r);
 }
 
+void cbst(node* root){
+    inOrder(root);
+    for(int i=1;i<in.size();i++){
+        if(in.at(i-1)>=in.at(i)){cout<<"not bst\n";return;}
+    }
+    cout<<"yes bst\n";
+}
+
 int main(){
     cout<<"Om\n";
     int a,b,c;
@@ -90,10 +95,7 @@ int main(){
             else{cout<<"No node found with key \""<<b<<"\"\n";}}
         if(ct=='p'){pri(n);cout<<endl;}
     }
-    pri(n);
-    if(cbst(n)){
-        cout<<"\nYes its a BST\n";
-    }
-    else{ cout<<"\nNope its not a BST\n";}
+    
+    cbst(n);
     return 0;
 }
