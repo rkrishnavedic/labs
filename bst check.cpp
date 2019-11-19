@@ -44,6 +44,27 @@ node* searchN(node* n,int k){
     if(t!=NULL){return t;}
     return NULL;
 }
+void levelOrder(node* n){
+    if(n==NULL) return;
+    queue<int> q;
+    node* t;
+    cout<<"Level Traversal:";
+    q.push(n->d);
+    int i;
+    while(!q.empty()){
+        i=q.front();
+        cout<<i<<" ";
+        q.pop();
+        t=searchN(n, i);
+        if(t->l!=NULL){
+            q.push(t->l->d);
+        }
+        if(t->r!=NULL){
+            q.push(t->r->d);
+        }
+    }
+    cout<<endl;
+}
 
 node* adde(node* n,int k){
     node* x,*t;
@@ -93,7 +114,7 @@ int main(){
             t->r=nodify(c);
         }}
             else{cout<<"No node found with key \""<<b<<"\"\n";}}
-        if(ct=='p'){pri(n);cout<<endl;}
+        if(ct=='p'){cout<<"Inorder: ";pri(n);cout<<endl;levelOrder(n);}
     }
     
     cbst(n);
